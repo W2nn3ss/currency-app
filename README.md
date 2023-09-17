@@ -11,7 +11,7 @@ composer update
 php artisan initialize:env
 php artisan key:generate
 ```
-composer update обновит зависимости приложения.
+**Composer update** обновит зависимости приложения.  
 **php artisan initialize:env** скопирует файл .env.example и создаст файл .env.  
 **php artisan key:generate** сгенерирует ключ для приложения Laravel и добавит его в файл .env.
 
