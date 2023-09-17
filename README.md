@@ -27,7 +27,6 @@ REDIS_PORT=your_redis_port
 ```
 Замените your_redis_host, your_redis_password и your_redis_port на свои настройки подключения к Redis.
 
-## Работа приложения
 ## Основные команды:
 
 ```shell
