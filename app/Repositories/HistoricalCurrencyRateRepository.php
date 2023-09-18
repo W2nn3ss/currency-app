@@ -5,14 +5,14 @@ namespace App\Repositories;
 use App\Models\HistoricalCurrencyRate;
 class HistoricalCurrencyRateRepository
 {
-    public function findRateByDateAndCurrency($date, $currencyCode): HistoricalCurrencyRate
+    public function findRateByDateAndCurrency($date, $currencyCode): HistoricalCurrencyRate|null
     {
         return HistoricalCurrencyRate::where('data_date', $date)
             ->where('currency_code', $currencyCode)
             ->first();
     }
 
-    public function createOrUpdateRate($startDate, $endDate, $date, $currencyCode, $rate, $previousRate, $rateDifference): HistoricalCurrencyRate
+    public function createOrUpdateRate($startDate, $endDate, $date, $currencyCode, $rate, $previousRate, $rateDifference): HistoricalCurrencyRate|null
     {
         return HistoricalCurrencyRate::updateOrCreate(
             [
