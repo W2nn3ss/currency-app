@@ -9,7 +9,7 @@ class getCurrency extends Command
 {
     protected $signature = 'send:get_currency {date} {currency} {base_currency?}';
 
-    protected $description = 'Получения курса валют';
+    protected $description = 'Получения курса валют за 180 дней';
 
     private CurrencyService $currencyService;
 
@@ -25,7 +25,7 @@ class getCurrency extends Command
         $currency = $this->argument('currency');
         $baseCurrency = $this->argument('base_currency');
 
-        $result = $this->currencyService->getData($date, $currency, $baseCurrency);
+        $result = $this->currencyService->getData($date, $currency, $baseCurrency, 'currency_rates');
 
         $this->info($result);
     }

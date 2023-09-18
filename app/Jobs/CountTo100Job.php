@@ -2,12 +2,12 @@
 
 namespace App\Jobs;
 
+use App\Models\HistoricalCurrencyRate;
 use App\Services\CurrencyService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
 
 class CountTo100Job implements ShouldQueue
 {
@@ -32,26 +32,21 @@ class CountTo100Job implements ShouldQueue
 
     public function handle()
     {
-        $endDate = !empty($this->date) ? now()->parse($this->date) : now()->subDays(1); // Используем текущую дату или дату из параметра
-        $startDate = $endDate->copy()->subDays(179);
+        $currentDate = !empty($this->date) ? now()->parse($this->date) : now()->subDays(1);
+        $startDate = $currentDate->copy()->subDays(179);
+        $endDate = $startDate->copy()->addDays(179);
 
         $currencyCode = !empty($this->currency) ? $this->currency : 'USD';
 
-        $data = [];
+        $baseCurrency = !empty($this->baseCurrency) ? $this->baseCurrency : 'RUR';
 
-        while ($endDate >= $startDate) {
-            $date = $endDate->format('Y-m-d');
-            $rate = $this->service->fetchData($date, $currencyCode);
+        while ($currentDate >= $startDate)
+        {
+            $dataDate = $currentDate->format('Y-m-d');
 
-            if ($rate !== null) {
-                $data[$date] = $rate;
-            }
+            $rate = $this->service->getData($dataDate, $currencyCode, $baseCurrency, 'historical_currency_rates', $endDate, $startDate);
 
-            $endDate->subDay();
+            $currentDate->subDay();
         }
-
-        Cache::put('currency_data_'.$endDate.'_'.$startDate, json_encode($data), 3600);
-
-        \Log::info('Currency data has been fetched and sent to Redis.');
     }
 }

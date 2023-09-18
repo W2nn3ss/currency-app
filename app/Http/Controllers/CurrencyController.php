@@ -15,7 +15,7 @@ class CurrencyController extends Controller
 
     public function getExchangeRate(Request $request, $date, $currencyCode, $baseCurrencyCode = 'RUR')
     {
-        $currency = $this->service->getData($date, $currencyCode, $baseCurrencyCode);
+        $currency = $this->service->getData($date, $currencyCode, $baseCurrencyCode, 'currency_rates');
 
         return response()->json($currency);
     }
