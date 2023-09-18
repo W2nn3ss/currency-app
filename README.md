@@ -16,7 +16,7 @@ php artisan key:generate
 **php artisan key:generate** сгенерирует ключ для приложения Laravel и добавит его в файл .env.
 
 ## Правки файла .env
-Откройте файл .env и настройте соединение с Redis, кэширование и выполнение очередей. Внесите следующие изменения:
+Откройте файл .env и настройте соединение с Redis, кэширование, выполнение очередей и настройки БД. Внесите следующие изменения:
 ```shell
 CACHE_DRIVER=redis
 QUEUE_CONNECTION=redis
@@ -24,6 +24,12 @@ QUEUE_CONNECTION=redis
 REDIS_HOST=your_redis_host
 REDIS_PASSWORD=your_redis_password
 REDIS_PORT=your_redis_port
+
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 Замените **your_redis_host**, **your_redis_password** и **your_redis_port** на свои настройки подключения к Redis.
 
